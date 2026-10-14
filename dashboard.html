@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080b12">
-  <meta name="description" content="A preview of the future OneKidGaming member, staff, and owner dashboards.">
+  <meta name="description" content="Your OneKidGaming account dashboard.">
   <title>Dashboard — OneKidGaming</title>
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
   <script src="/script.js" defer></script>
+  <script src="/portal.js" defer></script>
 </head>
 <body>
   <div class="ambient ambient-one" aria-hidden="true"></div>
@@ -23,16 +24,10 @@
       <a href="index.html#projects">Projects</a><a href="blog.html">Blog</a><a href="help.html">Help center</a><a href="announcements.html">News</a><a href="staff.html">Our team</a><a class="nav-cta" href="dashboard.html">OKG Portal <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
-  <main class="page-main" id="top"><section class="page-hero section-wrap"><div class="eyebrow"><span class="status-dot"></span> OKG CONTROL DECK</div><h1>Welcome to your<br><span class="gradient-text">future home base.</span></h1><p>One portal, different workspaces. This page previews the direction for member, staff, and owner dashboards. The cards below are design examples—not live data or working permissions.</p><div class="page-actions"><a class="button button-primary" href="login.html">Account access status <span>→</span></a><a class="button button-quiet" href="mailto:support@onekidgaming.blitz.cloud?subject=OKG%20Dashboard%20Feedback">Suggest a dashboard feature ↗</a></div></section>
+  <main class="page-main" id="top"><section class="page-hero section-wrap"><div class="eyebrow"><span class="status-dot"></span> OKG CONTROL DECK</div><h1>Your space.<br><span class="gradient-text">Your next level.</span></h1><p>Your live dashboard, personalized to your verified account role.</p><div class="page-actions"><a class="button button-quiet" href="announcements.html">Announcements ↗</a><button class="button button-quiet" type="button" data-logout>Sign out ↗</button></div><p class="portal-notice" data-dashboard-message hidden></p></section>
   <section class="section-wrap dashboard-layout">
-    <aside class="dashboard-sidebar"><h3>Control deck</h3><nav class="dashboard-nav" aria-label="Dashboard preview sections"><a class="active" href="#member">Member space</a><a href="#staff">Staff workspace</a><a href="#owner">Owner control room</a><a href="help.html">Help center ↗</a><a href="announcements.html">Announcements ↗</a></nav></aside>
-    <div class="dashboard-main-card"><span class="pill">UI PREVIEW · NOT CONNECTED</span><h2>Dashboard overview</h2><p>Once accounts are connected, the portal can show information based on your verified role. Sample values are intentionally omitted because no live data source is connected.</p>
-      <div class="dashboard-stats"><div class="dashboard-stat"><span>Account status</span><strong>Not active</strong></div><div class="dashboard-stat"><span>Notifications</span><strong>—</strong></div><div class="dashboard-stat"><span>Role access</span><strong>Server-verified</strong></div></div>
-      <div class="content-panel" id="member"><span class="pill">01 · MEMBER</span><h2>Member dashboard</h2><p>Profile and preferences · community links · saved posts · support requests · notification center · account security.</p></div>
-      <div class="content-panel" id="staff"><span class="pill">02 · STAFF</span><h2>Staff workspace</h2><p>Support inbox triage · assigned cases · reports and moderation notes · announcement drafts · staff resources · audit trail for sensitive actions.</p></div>
-      <div class="content-panel" id="owner"><span class="pill">03 · OWNER ONLY</span><h2>Owner control room</h2><p>Role and access management · staff invitations · content publishing · system health · security events · site configuration · administrative audit log.</p></div>
-      <div class="dashboard-note"><strong>Security checkpoint:</strong> This is a static front-end preview. No one can sign in here yet, and the dashboard does not grant or enforce permissions. Before launch, we need a real backend, database, secure sessions, role checks on every protected action, and an owner account created securely outside public registration.</div>
-    </div>
+    <aside class="dashboard-sidebar"><h3>Control deck</h3><nav class="dashboard-nav" aria-label="Dashboard sections"><a class="active" href="#live-dashboard">Overview</a><a href="help.html">Help center ↗</a><a href="announcements.html">Announcements ↗</a><a href="mailto:support@onekidgaming.blitz.cloud">Support ↗</a></nav><p class="portal-muted">Your role controls which tools are available.</p></aside>
+    <div id="live-dashboard" class="dashboard-live" aria-live="polite"><div class="dashboard-main-card"><span class="pill">CONNECTING</span><h2>Loading your dashboard…</h2><p>Checking your secure session.</p></div></div>
   </section></main>
   <section class="page-footer-cta section-wrap">
     <div class="join-panel"><div class="join-content"><div class="eyebrow"><span class="status-dot"></span> NEED A HAND?</div><h2>We're listening.</h2><p>Got a question, spotted a problem, or just need a real human? Send the support team a message.</p><a class="button button-primary" href="mailto:support@onekidgaming.blitz.cloud?subject=OneKidGaming%20Support">Need support? Contact us! <span aria-hidden="true">↗</span></a></div><div class="join-decoration" aria-hidden="true"><div class="join-ring ring-a"></div><div class="join-ring ring-b"></div><div class="join-ring ring-c"></div><span>OKG<span>WE'VE GOT YOU</span></span></div></div>
