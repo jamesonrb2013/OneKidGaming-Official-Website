@@ -19,12 +19,14 @@ app.disable("x-powered-by");
 if (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32) throw new Error("SESSION_SECRET must be at least 32 characters.");
 if (!process.env.DB_HOST || !process.env.DB_USER || !process.env.DB_PASSWORD || !process.env.DB_NAME) throw new Error("Set DB_HOST, DB_USER, DB_PASSWORD and DB_NAME.");
 
-const pool = mysql.createPool({
+const dbConfig = {
   host: process.env.DB_HOST, port: Number(process.env.DB_PORT || 3306),
   user: process.env.DB_USER, password: process.env.DB_PASSWORD, database: process.env.DB_NAME,
   waitForConnections: true, connectionLimit: 10, queueLimit: 0,
   ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: true } : undefined
-});
+};
+const pool = mysql.createPool(dbConfig);
+const sessionPool = require("mysql2").createPool(dbConfig);
 const MySQLStore = MySQLStoreFactory(session);
 const store = new MySQLStore({
   clearExpired: true, checkExpirationInterval: 900000, expiration: 604800000,
@@ -229,4 +231,4 @@ async function start(){
   console.log("OKG portal server listening on "+port);
 }
 start().catch(err=>{console.error("Could not start OKG portal:",err.message);process.exit(1);});
-process.on("SIGTERM",async()=>{await store.close();await pool.end();process.exit(0);});
+process.on("SIGTERM",async()=>{await store.close();await new Promise(resolve=>sessionPool.end(resolve));await pool.end();process.exit(0);});
