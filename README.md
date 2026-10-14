@@ -1,23 +1,42 @@
-# OneKidGaming Community Website
+# OneKidGaming Community Website + Portal
 
-A responsive, playful dark-mode website for the OneKidGaming community.
+Responsive website with a Node/Express API and MySQL-backed account portal.
 
 ## Pages
 - `index.html` — homepage and project hub
-- `blog.html` — blog landing page (editorial entries are placeholders until publishing is connected)
-- `help.html` — help center and support guidance
-- `announcements.html` — announcements page (content is clearly marked as starter content)
+- `blog.html` — blog landing page
+- `help.html` — help center
+- `announcements.html` — announcements
 - `staff.html` — team directory
-- `login.html` and `dashboard.html` — account portal UI and dashboard concept
+- `login.html` — member registration and sign-in
+- `dashboard.html` — role-aware member, staff, and owner dashboards
+- `owner-setup.html` — one-time owner bootstrap page, protected by an environment token
 
-## Local preview
-Open `index.html` in a browser or run a static server from the repository root.
+## Database and environment
+The server creates the required MySQL tables on first start: `okg_users`, `okg_sessions`, `okg_audit_logs`, `okg_support_tickets`, and `okg_announcements`.
 
-## Important account/security status
-The account portal is currently a front-end preview only. Real registration, sign-in, sessions, user profiles, staff/owner permissions, and live dashboard data are **not enabled**. Do not use the preview UI to collect passwords. A production account system requires a backend, a database, secure session handling, and server-enforced role permissions. The owner role must never be selectable from public sign-up.
+Set environment variables in the hosting dashboard. Never commit real secrets:
+- `NODE_ENV=production`
+- `PORT=8080`
+- `SESSION_SECRET` — unique random secret, at least 32 characters
+- `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`
+- `DB_SSL=true` for Aiven TLS
+- `PUBLIC_ORIGIN` — exact HTTPS origin of the preview service
+- `OWNER_BOOTSTRAP_TOKEN` — temporary random secret, at least 32 characters
+
+## First owner setup
+1. Deploy only to the preview service and configure database + environment variables.
+2. Visit `/owner-setup.html` over HTTPS and create the owner using the configured token.
+3. Immediately remove `OWNER_BOOTSTRAP_TOKEN` from the service environment and restart/redeploy.
+4. The owner setup endpoint refuses to create another owner after one exists. Public registration can only create member accounts. The owner can promote members to staff.
+
+## Security status
+Implemented: bcrypt password hashes, database-backed sessions, HTTP-only session cookies, session ID regeneration on sign-in, same-origin API checks, request size limits, rate limiting on authentication, server-side role checks, and audit events. The owner role cannot be selected during public registration.
+
+Before production launch, add email verification and password reset, verify database backups/restore, and test the deployment with real TLS. Member registration is open in this preview, so add anti-abuse controls before a broad public launch.
 
 ## Deployment
-The Dockerfile serves the static site with Nginx on port 8080. The preview should be deployed separately from the official domain. Do not change DNS or deploy to the official domain without explicit approval.
+The Dockerfile runs the Node app on port 8080. Keep preview separate from the official domain; do not change DNS or deploy to the official domain without explicit approval.
 
 ## Community links
 - Discord: https://discord.gg/nePR9dnuYm
