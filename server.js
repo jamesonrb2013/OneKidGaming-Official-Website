@@ -47,7 +47,7 @@ app.use(session({
   cookie: { httpOnly: true, secure: production, sameSite: "lax", maxAge: 604800000, path: "/" }
 }));
 
-const pages = new Set(["index.html","blog.html","help.html","announcements.html","staff.html","login.html","dashboard.html"]);
+const pages = new Set(["index.html","blog.html","help.html","announcements.html","staff.html","login.html","dashboard.html","owner-setup.html"]);
 app.get("/", (_req,res) => res.sendFile(path.join(__dirname,"index.html")));
 app.get("/:page", (req,res,next) => pages.has(req.params.page) ? res.sendFile(path.join(__dirname,req.params.page)) : next());
 app.get("/styles.css", (_req,res) => res.sendFile(path.join(__dirname,"styles.css")));
