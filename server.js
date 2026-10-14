@@ -1,5 +1,6 @@
 "use strict";
 const path = require("node:path");
+const fs = require("node:fs");
 const crypto = require("node:crypto");
 const express = require("express");
 const helmet = require("helmet");
@@ -23,7 +24,7 @@ const dbConfig = {
   host: process.env.DB_HOST, port: Number(process.env.DB_PORT || 3306),
   user: process.env.DB_USER, password: process.env.DB_PASSWORD, database: process.env.DB_NAME,
   waitForConnections: true, connectionLimit: 10, queueLimit: 0,
-  ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: true } : undefined
+  ssl: process.env.DB_SSL === "true" ? { ca: fs.readFileSync(path.join(__dirname, "ca.pem"), "utf8"), rejectUnauthorized: true } : undefined
 };
 const pool = mysql.createPool(dbConfig);
 const sessionPool = require("mysql2").createPool(dbConfig);
@@ -31,7 +32,7 @@ const MySQLStore = MySQLStoreFactory(session);
 const store = new MySQLStore({
   clearExpired: true, checkExpirationInterval: 900000, expiration: 604800000,
   createDatabaseTable: true, schema: { tableName: "okg_sessions" }
-}, pool);
+}, sessionPool);
 
 app.use(helmet({
   contentSecurityPolicy: { directives: {
