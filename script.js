@@ -30,7 +30,7 @@
   if (year) year.textContent = new Date().getFullYear();
 
   const revealItems = document.querySelectorAll(
-    ".intro-content, .project-card, .manifesto-heading, .principle, .join-panel"
+    ".intro-content, .project-card, .hub-card, .manifesto-heading, .principle, .join-panel, .content-panel, .staff-card"
   );
 
   if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
