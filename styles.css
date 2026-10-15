@@ -347,3 +347,21 @@ button,[type=button],[type=submit]{touch-action:manipulation}
  .dashboard-footer-note>a{margin-left:45px}
 }
 @media(prefers-reduced-motion:reduce){.dashboard-loading .loading-track span{animation:none;width:60%}}
+
+
+/* v1.2.0 finishing touches */
+.dashboard-live{display:grid;align-content:start}
+.portal-table-wrap{overflow-x:auto;overscroll-behavior-inline:contain}
+.portal-form label>input,.portal-form label>textarea,.portal-form label>select{margin-top:1px}
+.portal-form label:focus-within{color:#edf2ff}
+.portal-form input:invalid:not(:placeholder-shown),.portal-form textarea:invalid:not(:placeholder-shown){border-color:rgba(240,111,130,.5)}
+.portal-form input:valid:not(:placeholder-shown){border-color:rgba(83,214,176,.28)}
+.portal-auth-card .auth-switch-hint{line-height:1.9}
+.dashboard-live .content-panel .portal-list:empty{display:none}
+.dashboard-live .portal-list-item .page-actions{margin-top:12px}
+.dashboard-live .portal-list-item .page-actions .button{flex:0 0 auto}
+@media(max-width:650px){
+  .dashboard-live{gap:12px}
+  .portal-table-wrap{margin-inline:-2px}
+  .portal-form input,.portal-form textarea,.portal-form select{font-size:16px}
+}
