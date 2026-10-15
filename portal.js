@@ -29,6 +29,11 @@
     box.append(el("span", label), el("strong", value));
     return box;
   }
+  function field(label, control) {
+    const wrapper = el("label", label);
+    wrapper.append(control);
+    return wrapper;
+  }
 
   const authForms = $$("[data-auth-form]");
   authForms.forEach(form => form.addEventListener("submit", async event => {
@@ -148,7 +153,7 @@
       const message = el("textarea"); message.name = "message"; message.required = true; message.minLength = 10; message.maxLength = 5000; message.rows = 4; message.placeholder = "Tell us a little more…";
       const send = el("button", "Send support request", "button button-primary"); send.type = "submit";
       const feedback = el("p", "", "portal-notice"); feedback.hidden = true;
-      form.append(email, subject, message, send, feedback);
+      form.append(field("Reply email", email), field("Subject", subject), field("Message", message), send, feedback);
       form.addEventListener("submit", async event => {
         event.preventDefault(); send.disabled = true;
         try {
@@ -188,7 +193,7 @@
         const body = el("textarea"); body.name = "body"; body.required = true; body.minLength = 10; body.maxLength = 10000; body.rows = 4; body.placeholder = "Write the announcement…";
         const publish = el("button", data.user.role === "owner" ? "Publish announcement" : "Save draft for owner review", "button button-primary"); publish.type = "submit";
         const feedback = el("p", "", "portal-notice"); feedback.hidden = true;
-        announceForm.append(title, body, publish, feedback);
+        announceForm.append(field("Announcement title", title), field("Announcement text", body), publish, feedback);
         announceForm.addEventListener("submit", async event => {
           event.preventDefault(); publish.disabled = true;
           try {
