@@ -1,5 +1,7 @@
 # OneKidGaming Community Website + Portal
 
+**Current version: 1.1.0** — visual refresh, live homepage announcement ribbon, and visible site-version marker. The version is incremented whenever a fix or feature update is shipped.
+
 Responsive website with a Node/Express API and MySQL-backed account portal.
 
 ## Pages
@@ -42,3 +44,7 @@ The Dockerfile runs the Node app on port 8080. Keep preview separate from the of
 - Discord: https://discord.gg/nePR9dnuYm
 - Roblox community: https://www.roblox.com/share/g/874633301
 - Support email: support@onekidgaming.blitz.cloud
+
+## Version history
+- `1.1.0` — Refined visual system, responsive spacing, keyboard focus styling, live homepage announcement ribbon, and visible version marker.
+- `1.0.0` — Initial Node/Express portal, database-backed accounts, support tickets, announcements, and role-protected dashboards.
