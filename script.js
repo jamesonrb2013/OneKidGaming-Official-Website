@@ -1,4 +1,34 @@
 (() => {
+  const SITE_VERSION = "1.1.0";
+
+  // Keep a visible version marker on every page using the shared script.
+  const footerBottom = document.querySelector(".footer-bottom");
+  if (footerBottom && !footerBottom.querySelector(".site-version")) {
+    const version = document.createElement("span");
+    version.className = "site-version";
+    version.textContent = "OKG WEB v" + SITE_VERSION;
+    version.setAttribute("aria-label", "OneKidGaming website version " + SITE_VERSION);
+    footerBottom.prepend(version);
+  }
+
+  // The homepage news ribbon uses published announcements from the live API.
+  const announcementTitle = document.querySelector("#home-announcement-title");
+  if (announcementTitle) {
+    fetch("/api/announcements", { headers: { Accept: "application/json" } })
+      .then((response) => {
+        if (!response.ok) throw new Error("Announcements unavailable");
+        return response.json();
+      })
+      .then((data) => {
+        const latest = Array.isArray(data.announcements) ? data.announcements[0] : null;
+        announcementTitle.textContent = latest && typeof latest.title === "string"
+          ? latest.title
+          : "Fresh ideas are in the works.";
+      })
+      .catch(() => {
+        announcementTitle.textContent = "Find the latest from our community.";
+      });
+  }
   const toggle = document.querySelector(".menu-toggle");
   const nav = document.querySelector(".site-nav");
 
