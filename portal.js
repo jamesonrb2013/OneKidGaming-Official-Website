@@ -53,8 +53,20 @@
   const modeButtons = $$("[data-auth-mode]");
   modeButtons.forEach(button => button.addEventListener("click", () => {
     const mode = button.dataset.authMode;
-    $$("[data-auth-panel]").forEach(panel => panel.hidden = panel.dataset.authPanel !== mode);
-    modeButtons.forEach(item => item.classList.toggle("active", item === button));
+    $("[data-auth-panel]").forEach(panel => {
+      panel.hidden = panel.dataset.authPanel !== mode;
+    });
+    modeButtons.forEach(item => {
+      item.classList.toggle("active", item === button || (
+        item.closest(".portal-mode-switch") && item.dataset.authMode === mode
+      ));
+      if (item.getAttribute("role") === "tab") {
+        item.setAttribute("aria-selected", String(item.dataset.authMode === mode));
+      }
+    });
+    const activePanel = $("[data-auth-panel='" + mode + "']");
+    const firstField = activePanel && $("input", activePanel);
+    if (firstField && button.closest(".auth-switch-hint")) firstField.focus();
   }));
 
   const setupForm = $("[data-owner-setup]");
@@ -96,8 +108,17 @@
   const status = $("[data-dashboard-message]");
   const logout = $("[data-logout]");
   if (logout) logout.addEventListener("click", async () => {
-    try { await api("/api/auth/logout", { method: "POST", body: "{}" }); window.location.href = "login.html"; }
-    catch (error) { notice(status, error.message, "error"); }
+    const originalLabel = logout.textContent;
+    logout.disabled = true;
+    logout.textContent = "Signing out…";
+    try {
+      await api("/api/auth/logout", { method: "POST", body: "{}" });
+      window.location.href = "login.html";
+    } catch (error) {
+      notice(status, error.message, "error");
+      logout.disabled = false;
+      logout.textContent = originalLabel;
+    }
   });
 
   function panel(title, description) {
@@ -106,6 +127,7 @@
     return node;
   }
   async function loadDashboard() {
+    dashboard.setAttribute("aria-busy", "true");
     try {
       const data = await api("/api/dashboard/summary");
       dashboard.replaceChildren();
@@ -213,7 +235,9 @@
         owner.append(logs); dashboard.append(owner);
       }
       dashboard.append(el("p", "Signed in as " + data.user.email + ". Keep your password private.", "portal-muted"));
+      dashboard.setAttribute("aria-busy", "false");
     } catch (error) {
+      dashboard.setAttribute("aria-busy", "false");
       if (error.message.toLowerCase().includes("sign in")) { window.location.href = "login.html"; return; }
       notice(status, error.message, "error");
     }
