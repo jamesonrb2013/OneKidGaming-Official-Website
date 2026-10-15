@@ -27,8 +27,8 @@ Set environment variables in the hosting dashboard. Never commit real secrets:
 - `OWNER_BOOTSTRAP_TOKEN` — temporary random secret, at least 32 characters
 
 ## First owner setup
-1. Deploy only to the preview service and configure database + environment variables.
-2. Visit `/owner-setup.html` over HTTPS and create the owner using the configured token.
+1. Configure the official Blitz app's database and environment variables before enabling account creation.
+2. Visit `/owner-setup.html` over HTTPS and create the owner using the configured token, only if owner setup has not already been completed.
 3. Immediately remove `OWNER_BOOTSTRAP_TOKEN` from the service environment and restart/redeploy.
 4. The owner setup endpoint refuses to create another owner after one exists. Public registration can only create member accounts. The owner can promote members to staff.
 
@@ -38,7 +38,7 @@ Implemented: bcrypt password hashes, database-backed sessions, HTTP-only session
 Before production launch, add email verification and password reset, verify database backups/restore, and test the deployment with real TLS. Member registration is open in this preview, so add anti-abuse controls before a broad public launch.
 
 ## Deployment
-The Dockerfile runs the Node app on port 8080. Keep preview separate from the official domain; do not change DNS or deploy to the official domain without explicit approval.
+The Dockerfile runs the Node app on port 8080. The current production target is the Blitz app at `https://onekidgaming.blitz.cloud`. Keep credentials in Blitz environment variables and never commit secrets. Test major future changes before deploying them to the live site.
 
 ## Community links
 - Discord: https://discord.gg/nePR9dnuYm
