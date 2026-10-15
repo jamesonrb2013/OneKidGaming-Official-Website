@@ -4,44 +4,84 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080b12">
-  <meta name="description" content="Preview of the upcoming OneKidGaming account sign-in experience.">
-  <title>Account Access — OneKidGaming</title>
+  <meta name="description" content="Sign in or create your OneKidGaming member account.">
+  <title>Sign in or Join — OneKidGaming</title>
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
-  <script src="/script.js" defer></script><script src="/portal.js" defer></script>
+  <script src="/script.js" defer></script>
+  <script src="/portal.js" defer></script>
 </head>
-<body>
+<body class="portal-page portal-auth-page">
   <div class="ambient ambient-one" aria-hidden="true"></div>
   <div class="ambient ambient-two" aria-hidden="true"></div>
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="OneKidGaming home"><span class="brand-mark"><span></span><span></span><span></span></span><span class="brand-name">OneKid<span>Gaming</span></span></a>
     <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button>
     <nav class="site-nav" id="site-nav">
-      <a href="index.html#projects">Projects</a><a href="blog.html">Blog</a><a href="help.html">Help center</a><a href="announcements.html">News</a><a href="staff.html">Our team</a><a class="nav-cta" href="dashboard.html">OKG Portal <span aria-hidden="true">↗</span></a>
+      <a href="index.html#projects">Projects</a><a href="blog.html">Blog</a><a href="help.html">Help center</a><a href="announcements.html">News</a><a href="staff.html">Our team</a><a class="nav-cta" href="dashboard.html">My dashboard <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
-  <main class="page-main" id="top"><section class="page-hero section-wrap"><div class="eyebrow"><span class="status-dot"></span> OKG ACCOUNT PORTAL</div><h1>Your space.<br><span class="gradient-text">Your next level.</span></h1><p>Sign in to your portal, or create a member account. Staff and owner access is assigned securely and cannot be chosen during public sign-up.</p></section>
-  <section class="section-wrap portal-auth-layout"><div class="content-panel portal-auth-card">
-<div class="portal-mode-switch"><button class="button button-quiet active" type="button" data-auth-mode="login">Sign in</button><button class="button button-quiet" type="button" data-auth-mode="register">Create account</button></div>
-<div data-auth-panel="login"><h2>Welcome back 👋</h2><form class="portal-form" data-auth-form="login"><label>Email address<input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label><label>Password<input type="password" name="password" required maxlength="128" autocomplete="current-password"></label><button class="button button-primary" type="submit">Sign in ↗</button><p class="portal-notice" data-form-message hidden></p></form></div>
-<div data-auth-panel="register" hidden><h2>Create your account ✨</h2><form class="portal-form" data-auth-form="register"><label>Username<input name="username" required minlength="3" maxlength="24" pattern="[A-Za-z0-9_-]{3,24}" autocomplete="username"></label><label>Email address<input type="email" name="email" required maxlength="254" autocomplete="email"></label><label>Password<input type="password" name="password" required minlength="12" maxlength="128" autocomplete="new-password"><span class="portal-muted">Use at least 12 characters.</span></label><button class="button button-primary" type="submit">Create member account ↗</button><p class="portal-notice" data-form-message hidden></p></form></div></div>
-<aside class="content-panel portal-auth-side"><span class="pill">BUILT WITH GUARDRAILS</span><h2>One account. Your own space.</h2><p>Member profiles, support requests, staff tools, and owner controls are tied to server-verified roles.</p><p class="portal-muted">Email verification and password recovery still need to be added before production launch.</p></aside></section>
-<section class="section-wrap content-grid" hidden>
-    <article class="content-panel"><span class="pill">MEMBER SPACE</span><h2>👤 Your account</h2><p>A future member dashboard for profile details, saved preferences, community links, notifications, and account security.</p></article>
-    <article class="content-panel"><span class="pill">STAFF WORKSPACE</span><h2>🛡️ Staff tools</h2><p>A role-protected workspace for support queues, reports, announcements drafts, and team resources. Staff access will be granted by an authorized administrator, never by public sign-up.</p></article>
-    <article class="content-panel"><span class="pill">OWNER CONTROL ROOM</span><h2>👑 Owner dashboard</h2><p>A private admin area for managing roles, website content, audit events, and platform settings. Owner privileges will be verified server-side.</p></article>
-    <article class="content-panel"><span class="pill">NOT LIVE YET</span><h2>Safe by design</h2><p>Registration and sign-in will only be enabled after the backend, database, secure sessions, and server-enforced permissions are configured. No passwords are requested or stored by this preview.</p><a class="button button-primary" href="mailto:support@onekidgaming.blitz.cloud?subject=OKG%20Portal%20Interest">Get portal updates <span>↗</span></a></article>
-  </section></main>
-  <section class="page-footer-cta section-wrap">
-    <div class="join-panel"><div class="join-content"><div class="eyebrow"><span class="status-dot"></span> NEED A HAND?</div><h2>We're listening.</h2><p>Got a question, spotted a problem, or just need a real human? Send the support team a message.</p><a class="button button-primary" href="mailto:support@onekidgaming.blitz.cloud?subject=OneKidGaming%20Support">Need support? Contact us! <span aria-hidden="true">↗</span></a></div><div class="join-decoration" aria-hidden="true"><div class="join-ring ring-a"></div><div class="join-ring ring-b"></div><div class="join-ring ring-c"></div><span>OKG<span>WE'VE GOT YOU</span></span></div></div>
-  </section>
-  <footer class="site-footer section-wrap">
+  <main class="page-main auth-main" id="top">
+    <section class="page-hero section-wrap auth-intro">
+      <div class="eyebrow"><span class="status-dot"></span> YOUR OKG ACCOUNT</div>
+      <h1>Good to have you<br><span class="gradient-text">in the loop.</span></h1>
+      <p>Sign in to pick up where you left off, or join the community and make your own space.</p>
+    </section>
+    <section class="section-wrap portal-auth-layout">
+      <div class="content-panel portal-auth-card">
+        <div class="portal-mode-switch" role="tablist" aria-label="Account access">
+          <button class="button button-quiet active" type="button" role="tab" aria-selected="true" data-auth-mode="login">Sign in</button>
+          <button class="button button-quiet" type="button" role="tab" aria-selected="false" data-auth-mode="register">Create account</button>
+        </div>
+        <div data-auth-panel="login" role="tabpanel">
+          <span class="pill">WELCOME BACK</span>
+          <h2>Sign in to OKG</h2>
+          <p class="auth-panel-copy">Your projects, support, and member space are waiting.</p>
+          <form class="portal-form" data-auth-form="login">
+            <label>Email address<input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label>
+            <label>Password<input type="password" name="password" required maxlength="128" autocomplete="current-password" placeholder="Enter your password"></label>
+            <button class="button button-primary" type="submit">Sign in <span aria-hidden="true">→</span></button>
+            <p class="portal-notice" data-form-message role="status" aria-live="polite" hidden></p>
+          </form>
+          <p class="auth-switch-hint">New to OKG? <button type="button" data-auth-mode="register">Create an account</button></p>
+        </div>
+        <div data-auth-panel="register" role="tabpanel" hidden>
+          <span class="pill">JOIN THE COMMUNITY</span>
+          <h2>Make it official.</h2>
+          <p class="auth-panel-copy">Create a member account. Staff permissions are assigned separately by an owner.</p>
+          <form class="portal-form" data-auth-form="register">
+            <label>Username<input name="username" required minlength="3" maxlength="24" pattern="[A-Za-z0-9_-]{3,24}" autocomplete="username" placeholder="Choose a username"><span class="field-hint">3–24 characters: letters, numbers, _ or -.</span></label>
+            <label>Email address<input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label>
+            <label>Password<input type="password" name="password" required minlength="12" maxlength="128" autocomplete="new-password" placeholder="Create a strong password"><span class="field-hint">Use at least 12 characters. Keep it private.</span></label>
+            <button class="button button-primary" type="submit">Create member account <span aria-hidden="true">→</span></button>
+            <p class="portal-notice" data-form-message role="status" aria-live="polite" hidden></p>
+          </form>
+          <p class="auth-switch-hint">Already have an account? <button type="button" data-auth-mode="login">Sign in instead</button></p>
+        </div>
+      </div>
+      <aside class="content-panel portal-auth-side">
+        <span class="pill">ONE COMMUNITY. YOUR SPACE.</span>
+        <div class="auth-side-mark" aria-hidden="true"><span class="brand-mark"><span></span><span></span><span></span></span></div>
+        <h2>Built together.<br><span class="gradient-text">Ready for you.</span></h2>
+        <p>One place to keep up with OKG, contact support, and access the tools available to your account.</p>
+        <ul class="auth-benefits">
+          <li><span aria-hidden="true">✓</span> A personal member dashboard</li>
+          <li><span aria-hidden="true">✓</span> Support requests in one place</li>
+          <li><span aria-hidden="true">✓</span> Role-based access controls</li>
+        </ul>
+        <p class="portal-muted">For your safety, public sign-up only creates member accounts. Staff and owner access cannot be self-selected.</p>
+      </aside>
+    </section>
+    <div class="auth-back-link"><a href="index.html">← Back to OneKidGaming home</a><span>Secure account session · OKG Web</span></div>
+  </main>
+  <footer class="site-footer section-wrap auth-footer">
     <a class="brand footer-brand" href="index.html"><span class="brand-mark"><span></span><span></span><span></span></span><span class="brand-name">OneKid<span>Gaming</span></span></a>
     <p>Good ideas. Built together.</p>
-    <div class="footer-links"><a href="blog.html">Blog</a><a href="help.html">Help</a><a href="announcements.html">News</a><a href="staff.html">Staff</a><a href="mailto:support@onekidgaming.blitz.cloud">Support</a></div>
-    <div class="footer-bottom"><span>© <span id="year"></span> OneKidGaming. Built with curiosity.</span><a href="#top">BACK TO TOP ↑</a></div>
+    <div class="footer-links"><a href="help.html">Help center</a><a href="announcements.html">News</a><a href="mailto:support@onekidgaming.blitz.cloud">Contact support</a></div>
+    <div class="footer-bottom"><span>© <span id="year"></span> OneKidGaming.</span><a href="#top">BACK TO TOP ↑</a></div>
   </footer>
-</body></html>
+</body>
+</html>
