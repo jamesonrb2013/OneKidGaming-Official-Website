@@ -1,5 +1,5 @@
 (() => {
-  const SITE_VERSION = "1.2.0";
+  const SITE_VERSION = "1.2.1";
 
   // Keep a visible version marker on every page using the shared script.
   const footerBottom = document.querySelector(".footer-bottom");
