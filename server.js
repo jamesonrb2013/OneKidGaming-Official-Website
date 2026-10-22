@@ -110,6 +110,13 @@ async function initDb(){
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_announcement_status(status,published_at),FOREIGN KEY(author_id) REFERENCES okg_users(id) ON DELETE SET NULL)
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
+  await pool.query(`CREATE TABLE IF NOT EXISTS okg_invite_codes(
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,code_hash CHAR(64) NOT NULL UNIQUE,code_hint VARCHAR(24) NOT NULL,
+    created_by BIGINT UNSIGNED NULL,max_uses INT UNSIGNED NOT NULL DEFAULT 1,used_count INT UNSIGNED NOT NULL DEFAULT 0,
+    expires_at DATETIME NULL,revoked_at DATETIME NULL,last_used_at DATETIME NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,INDEX idx_invite_active(revoked_at,expires_at),
+    FOREIGN KEY(created_by) REFERENCES okg_users(id) ON DELETE SET NULL)
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci`);
 }
 app.get("/api/health",wrap(async(_req,res)=>{await pool.query("SELECT 1");res.json({ok:true,database:"connected"});}));
 app.post("/api/auth/register",signupLimit,wrap(async(req,res)=>{
