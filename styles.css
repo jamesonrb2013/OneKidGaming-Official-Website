@@ -365,3 +365,35 @@ button,[type=button],[type=submit]{touch-action:manipulation}
   .portal-table-wrap{margin-inline:-2px}
   .portal-form input,.portal-form textarea,.portal-form select{font-size:16px}
 }
+
+
+/* OKG Manager private-access promotion */
+.manager-promo{padding:0 0 110px}
+.manager-promo-panel{position:relative;display:flex;align-items:center;min-height:315px;overflow:hidden;padding:48px 55px;border:1px solid rgba(92,132,255,.3);border-radius:18px;background:radial-gradient(ellipse at 100% 0%,rgba(65,103,231,.2),transparent 44%),linear-gradient(115deg,#111a2c,#0a111d 75%)}
+.manager-promo-copy{position:relative;z-index:2;max-width:700px}
+.manager-promo-copy h2{max-width:690px;margin:18px 0 12px;font:600 clamp(30px,4.2vw,48px)/1.13 var(--font-head);letter-spacing:-2px}
+.manager-promo-copy p{max-width:660px;margin:0;color:#9eacc2;font-size:13px;line-height:1.9}
+.manager-promo-copy .button{margin-top:22px}
+.manager-promo-orbit{position:absolute;right:65px;top:50%;width:210px;height:210px;transform:translateY(-50%);display:grid;place-items:center;border:1px solid rgba(102,139,255,.22);border-radius:50%;box-shadow:0 0 70px rgba(74,102,237,.12),inset 0 0 45px rgba(74,102,237,.06)}
+.manager-promo-orbit:before,.manager-promo-orbit:after{content:"";position:absolute;border:1px solid rgba(77,226,238,.22);border-radius:50%;transform:rotate(35deg)}
+.manager-promo-orbit:before{width:155px;height:245px}
+.manager-promo-orbit:after{width:245px;height:155px;border-color:rgba(161,124,255,.28);transform:rotate(-35deg)}
+.manager-promo-orbit>span{font:700 26px var(--font-head);letter-spacing:5px;color:#dce5ff;text-shadow:0 0 30px #6c87ff50}
+.manager-page-hero{padding-bottom:35px}
+.manager-page-hero>p{max-width:760px}
+.manager-access-note{display:flex;align-items:flex-start;gap:13px;max-width:680px;margin-top:30px;padding:16px 18px;border:1px solid rgba(83,214,176,.18);border-radius:12px;background:rgba(25,100,80,.08)}
+.manager-access-note>span{color:#70e6c0;font-size:19px}
+.manager-access-note strong{display:block;color:#dcefe9;font-size:12px}
+.manager-access-note p{margin:3px 0 0;font-size:11px;line-height:1.8;color:#91aaa7}
+.manager-feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:15px 0 90px}
+.manager-feature{margin:0;min-width:0}
+.manager-feature-icon{display:grid;place-items:center;width:47px;height:47px;margin-bottom:18px;border:1px solid rgba(117,146,255,.22);border-radius:13px;background:linear-gradient(140deg,rgba(97,124,255,.15),rgba(63,206,216,.06));font-size:23px}
+.manager-feature h2{margin:9px 0 8px;font:600 20px/1.3 var(--font-head);letter-spacing:-.5px}
+.manager-feature p{margin:0}
+.manager-next-step{padding-bottom:80px}
+.manager-next-step .join-panel{min-height:360px}
+.manager-next-step .join-content{max-width:620px}
+.manager-next-step .join-content p{max-width:540px}
+.manager-small-print{margin-top:17px!important;font-size:10px!important;color:#7787a2!important}
+@media(max-width:850px){.manager-promo-orbit{right:25px;opacity:.35}.manager-promo-copy{max-width:650px}.manager-feature-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.manager-promo{padding-bottom:75px}.manager-promo-panel{padding:30px 23px;min-height:0}.manager-promo-orbit{right:-65px;opacity:.2}.manager-promo-copy h2{font-size:32px;letter-spacing:-1.2px}.manager-promo-copy p{font-size:12px}.manager-feature-grid{grid-template-columns:1fr;padding-bottom:60px}.manager-page-hero{padding-top:50px}.manager-next-step{padding-bottom:55px}.manager-next-step .join-panel{padding:30px 22px}.manager-next-step .join-decoration{opacity:.18}.manager-next-step .page-actions .button{width:100%;justify-content:space-between}}
