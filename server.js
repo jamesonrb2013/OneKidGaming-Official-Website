@@ -50,7 +50,7 @@ app.use(session({
   cookie: { httpOnly: true, secure: production, sameSite: "lax", maxAge: 604800000, path: "/" }
 }));
 
-const pages = new Set(["index.html","blog.html","help.html","announcements.html","staff.html","login.html","dashboard.html","owner-setup.html"]);
+const pages = new Set(["index.html","blog.html","help.html","announcements.html","staff.html","login.html","dashboard.html","owner-setup.html","okg-manager.html"]);
 app.get("/", (_req,res) => res.sendFile(path.join(__dirname,"index.html")));
 app.get("/invite", (_req, res) => {
   const installUrl = "https://discord.com/oauth2/authorize?client_id=1540731259544666132&permissions=1494917180630&integration_type=0&scope=bot%20applications.commands";
