@@ -50,20 +50,19 @@ app.use(session({
   cookie: { httpOnly: true, secure: production, sameSite: "lax", maxAge: 604800000, path: "/" }
 }));
 
-const pages = new Set(["index.html","blog.html","help.html","announcements.html","staff.html","login.html","dashboard.html","owner-setup.html"]);
+const pages = new Set(["index.html","blog.html","help.html","announcements.html","staff.html","login.html","dashboard.html","owner-setup.html","invite.html"]);
 app.get("/", (_req,res) => res.sendFile(path.join(__dirname,"index.html")));
-app.get("/invite", (_req, res) => {
-  const installUrl = "https://discord.com/oauth2/authorize?client_id=1540731259544666132&permissions=1494917180630&integration_type=0&scope=bot%20applications.commands";
-  res.redirect(302, installUrl);
-});
+app.get("/invite", (_req, res) => res.sendFile(path.join(__dirname, "invite.html")));
 app.get("/:page", (req,res,next) => pages.has(req.params.page) ? res.sendFile(path.join(__dirname,req.params.page)) : next());
 app.get("/styles.css", (_req,res) => res.sendFile(path.join(__dirname,"styles.css")));
 app.get("/script.js", (_req,res) => res.sendFile(path.join(__dirname,"script.js")));
 app.get("/portal.js", (_req,res) => res.sendFile(path.join(__dirname,"portal.js")));
+app.get("/invite.js", (_req,res) => res.sendFile(path.join(__dirname,"invite.js")));
 app.use("/assets", express.static(path.join(__dirname,"assets"), { dotfiles:"deny", index:false }));
 
 const authLimit = rateLimit({ windowMs: 900000, limit: 10, standardHeaders: "draft-8", legacyHeaders: false });
 const signupLimit = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: "draft-8", legacyHeaders: false });
+const inviteLimit = rateLimit({ windowMs: 900000, limit: 8, standardHeaders: "draft-8", legacyHeaders: false });
 function text(v,n=120){return typeof v==="string"?v.trim().slice(0,n):"";}
 function emailOk(v){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)&&v.length<=254;}
 function passwordOk(v){return typeof v==="string"&&v.length>=12&&v.length<=128;}
