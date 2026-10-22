@@ -1,6 +1,6 @@
 # OneKidGaming Community Website + Portal
 
-**Current version: 1.2.0** — complete account UI refresh for sign-in, signup, member dashboard, and sign-out controls. The version is incremented whenever a fix or feature update is shipped.
+**Current version: 1.2.1** — complete account UI refresh for sign-in, signup, member dashboard, and sign-out controls. The version is incremented whenever a fix or feature update is shipped.
 
 Responsive website with a Node/Express API and MySQL-backed account portal.
 
@@ -13,6 +13,7 @@ Responsive website with a Node/Express API and MySQL-backed account portal.
 - `login.html` — member registration and sign-in
 - `dashboard.html` — role-aware member, staff, and owner dashboards
 - `owner-setup.html` — one-time owner bootstrap page, protected by an environment token
+- `/invite` — branded OKG Manager install URL that redirects to Discord server authorization
 
 ## Database and environment
 The server creates the required MySQL tables on first start: `okg_users`, `okg_sessions`, `okg_audit_logs`, `okg_support_tickets`, and `okg_announcements`.
@@ -46,6 +47,7 @@ The Dockerfile runs the Node app on port 8080. The current production target is 
 - Support email: support@onekidgaming.blitz.cloud
 
 ## Version history
+- `1.2.1` — Added the branded `/invite` URL for installing OKG Manager into Discord servers and linked it from the homepage.
 - `1.2.0` — Redesigned sign-in and registration experience, member dashboard shell, responsive staff/owner/member panels, support forms, status notices, and sign-out styling.
 - `1.1.0` — Refined visual system, responsive spacing, keyboard focus styling, live homepage announcement ribbon, and visible version marker.
 - `1.0.0` — Initial Node/Express portal, database-backed accounts, support tickets, announcements, and role-protected dashboards.
