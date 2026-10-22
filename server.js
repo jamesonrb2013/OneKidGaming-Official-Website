@@ -52,6 +52,10 @@ app.use(session({
 
 const pages = new Set(["index.html","blog.html","help.html","announcements.html","staff.html","login.html","dashboard.html","owner-setup.html"]);
 app.get("/", (_req,res) => res.sendFile(path.join(__dirname,"index.html")));
+app.get("/invite", (_req, res) => {
+  const installUrl = "https://discord.com/oauth2/authorize?client_id=1540731259544666132&permissions=1497064664310&integration_type=0&scope=bot%20applications.commands";
+  res.redirect(302, installUrl);
+});
 app.get("/:page", (req,res,next) => pages.has(req.params.page) ? res.sendFile(path.join(__dirname,req.params.page)) : next());
 app.get("/styles.css", (_req,res) => res.sendFile(path.join(__dirname,"styles.css")));
 app.get("/script.js", (_req,res) => res.sendFile(path.join(__dirname,"script.js")));
