@@ -53,3 +53,17 @@ The Dockerfile runs the Node app on port 8080. The current production target is 
 - `1.2.0` — Redesigned sign-in and registration experience, member dashboard shell, responsive staff/owner/member panels, support forms, status notices, and sign-out styling.
 - `1.1.0` — Refined visual system, responsive spacing, keyboard focus styling, live homepage announcement ribbon, and visible version marker.
 - `1.0.0` — Initial Node/Express portal, database-backed accounts, support tickets, announcements, and role-protected dashboards.
+
+
+### Automated checks and low-cost deployment
+
+The `.github/workflows/website-checks.yml` workflow runs JavaScript syntax checks, verifies the OKG Manager page and its route, and smoke-tests the public homepage. It does **not** deploy the site by itself.
+
+To avoid using blitz.cloud's monthly build minutes for this website:
+1. Open the blitz.cloud dashboard and select the existing `okg-website` app.
+2. Open **Settings** and enable **Build on your own GitHub Actions**. Approve the requested GitHub App permissions if prompted.
+3. Confirm the setting adds blitz.cloud's own `.github/workflows/blitz-cloud.yml` workflow to the `main` branch. Do not write a replacement for that file manually; blitz.cloud provisions credentials and signed build steps for it.
+4. In the app settings, enable **Build pushes made by bots and workflows** if that option is shown, so automated commits can trigger builds.
+5. Watch the app's Overview/Activity and the GitHub Actions run until the new commit is live. Verify `/okg-manager.html` and the homepage after deployment.
+
+This is a one-time hosting-dashboard setup; repository access alone cannot switch the hosting account's build mode. Keep the current live version running until the new build succeeds.
