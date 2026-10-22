@@ -1,0 +1,41 @@
+name: Website checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  syntax-and-route-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate JavaScript syntax
+        run: npm run check
+      - name: Validate OKG Manager page and route
+        shell: bash
+        run: |
+          test -f okg-manager.html
+          grep -q '"okg-manager.html"' server.js
+          grep -q 'discord.gg/2nHAng3gnr' okg-manager.html
+          grep -q 'Coolkid_5701' okg-manager.html
+      - name: Check website response (live smoke test)
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --retry 3 --retry-delay 5 https://onekidgaming.blitz.cloud/ -o /tmp/home.html
+          grep -qi '<html' /tmp/home.html
