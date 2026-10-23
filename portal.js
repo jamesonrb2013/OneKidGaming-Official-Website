@@ -58,7 +58,7 @@
   const modeButtons = $$("[data-auth-mode]");
   modeButtons.forEach(button => button.addEventListener("click", () => {
     const mode = button.dataset.authMode;
-    $("[data-auth-panel]").forEach(panel => {
+    $$("[data-auth-panel]").forEach(panel => {
       panel.hidden = panel.dataset.authPanel !== mode;
     });
     modeButtons.forEach(item => {
