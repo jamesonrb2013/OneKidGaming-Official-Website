@@ -86,8 +86,13 @@ app.use("/api", (req,res,next) => {
   const origin=req.get("origin");
   if(!origin)return next();
   let expected;
-  try { expected=process.env.PUBLIC_ORIGIN ? new URL(process.env.PUBLIC_ORIGIN).origin : req.protocol + "://" + req.get("host"); }
-  catch { return res.status(403).json({error:"Request origin could not be verified."}); }
+  try {
+    const configuredOrigin=process.env.PUBLIC_ORIGIN;
+    const normalizedOrigin=configuredOrigin
+      ? (configuredOrigin.includes("://") ? configuredOrigin : "https://" + configuredOrigin)
+      : req.protocol + "://" + req.get("host");
+    expected=new URL(normalizedOrigin).origin;
+  } catch { return res.status(403).json({error:"Request origin could not be verified."}); }
   if(origin!==expected)return res.status(403).json({error:"Request origin could not be verified."});
   next();
 });
