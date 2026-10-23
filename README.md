@@ -1,6 +1,6 @@
 # OneKidGaming Community Website + Portal
 
-**Current version: 1.2.2** — adds a dedicated OKG Manager information page and homepage promotion for private access requests. The version is incremented whenever a fix or feature update is shipped.
+**Current version: 1.2.3** — fixes explicit OKG Manager page serving, disables stale HTML/asset caching, exposes `/api/version`, and displays the version badge site-wide. The version is incremented whenever a fix or feature update is shipped.
 
 Responsive website with a Node/Express API and MySQL-backed account portal.
 
@@ -48,6 +48,7 @@ The Dockerfile runs the Node app on port 8080. The current production target is 
 - Support email: support@onekidgaming.blitz.cloud
 
 ## Version history
+- `1.2.3` — Fixed the explicit OKG Manager route, added a live version endpoint, disabled stale page/script/style caching, and synchronized the visible version badge and package version.
 - `1.2.2` — Added homepage promotion and a dedicated OKG Manager page explaining features and how to request private access.
 - `1.2.1` — Added the branded `/invite` URL for installing OKG Manager into Discord servers and linked it from the homepage.
 - `1.2.0` — Redesigned sign-in and registration experience, member dashboard shell, responsive staff/owner/member panels, support forms, status notices, and sign-out styling.
