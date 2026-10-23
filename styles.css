@@ -397,3 +397,6 @@ button,[type=button],[type=submit]{touch-action:manipulation}
 .manager-small-print{margin-top:17px!important;font-size:10px!important;color:#7787a2!important}
 @media(max-width:850px){.manager-promo-orbit{right:25px;opacity:.35}.manager-promo-copy{max-width:650px}.manager-feature-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.manager-promo{padding-bottom:75px}.manager-promo-panel{padding:30px 23px;min-height:0}.manager-promo-orbit{right:-65px;opacity:.2}.manager-promo-copy h2{font-size:32px;letter-spacing:-1.2px}.manager-promo-copy p{font-size:12px}.manager-feature-grid{grid-template-columns:1fr;padding-bottom:60px}.manager-page-hero{padding-top:50px}.manager-next-step{padding-bottom:55px}.manager-next-step .join-panel{padding:30px 22px}.manager-next-step .join-decoration{opacity:.18}.manager-next-step .page-actions .button{width:100%;justify-content:space-between}}
+
+/* Website version marker */
+.site-version{display:inline-flex;align-items:center;gap:6px;margin-right:18px;padding:4px 8px;border:1px solid rgba(111,143,255,.28);border-radius:6px;color:#9aa9cf;font-size:10px;font-weight:700;letter-spacing:1px;white-space:nowrap}
