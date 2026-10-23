@@ -1,6 +1,6 @@
 # OneKidGaming Community Website + Portal
 
-**Current version: 1.2.3** — fixes explicit OKG Manager page serving, disables stale HTML/asset caching, exposes `/api/version`, and displays the version badge site-wide. The version is incremented whenever a fix or feature update is shipped.
+**Current version: 1.2.4** — fixes the signup/sign-in tab switching bug, restricts owner setup to the configured platform admin email, supports secure recovery of that admin account with the bootstrap token, and keeps the site version badge synchronized.
 
 Responsive website with a Node/Express API and MySQL-backed account portal.
 
@@ -27,12 +27,13 @@ Set environment variables in the hosting dashboard. Never commit real secrets:
 - `DB_SSL=true` for Aiven TLS
 - `PUBLIC_ORIGIN` — exact HTTPS origin of the preview service
 - `OWNER_BOOTSTRAP_TOKEN` — temporary random secret, at least 32 characters
+- `PLATFORM_ADMIN_EMAIL=jamesonrb2013@gmail.com` — the only email accepted by the protected owner setup/recovery flow
 
 ## First owner setup
 1. Configure the official Blitz app's database and environment variables before enabling account creation.
-2. Visit `/owner-setup.html` over HTTPS and create the owner using the configured token, only if owner setup has not already been completed.
-3. Immediately remove `OWNER_BOOTSTRAP_TOKEN` from the service environment and restart/redeploy.
-4. The owner setup endpoint refuses to create another owner after one exists. Public registration can only create member accounts. The owner can promote members to staff.
+2. Set `PLATFORM_ADMIN_EMAIL` to `jamesonrb2013@gmail.com`. Visit `/owner-setup.html` over HTTPS and create or recover the platform admin account using that exact email and the configured token. The token is required; matching the email alone never grants owner access.
+3. Immediately remove `OWNER_BOOTSTRAP_TOKEN` from the service environment and restart/redeploy after the admin account is ready.
+4. Public registration can only create member accounts. The owner setup/recovery endpoint only accepts the configured platform admin email and a valid bootstrap token. The owner can promote members to staff.
 
 ## Security status
 Implemented: bcrypt password hashes, database-backed sessions, HTTP-only session cookies, session ID regeneration on sign-in, same-origin API checks, request size limits, rate limiting on authentication, server-side role checks, and audit events. The owner role cannot be selected during public registration.
