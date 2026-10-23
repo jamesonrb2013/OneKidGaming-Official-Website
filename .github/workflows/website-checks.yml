@@ -37,7 +37,7 @@ jobs:
           grep -q 'SITE_VERSION = "1.2.4"' script.js
           grep -q 'discord.gg/2nHAng3gnr' okg-manager.html
           grep -q 'Coolkid_5701' okg-manager.html
-          grep -Fq '$(["data-auth-panel"]).forEach' portal.js
+          grep -Fq '$$("[data-auth-panel]").forEach' portal.js
           grep -q 'jamesonrb2013@gmail.com' server.js
           grep -q 'PLATFORM_ADMIN_EMAIL' server.js
       - name: Check website response (live smoke test)
