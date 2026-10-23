@@ -11,6 +11,7 @@ const bcrypt = require("bcryptjs");
 const rateLimit = require("express-rate-limit");
 
 const app = express();
+const SITE_VERSION = "1.2.3";
 const port = Number(process.env.PORT || 8080);
 const production = process.env.NODE_ENV === "production";
 const cookieName = production ? "__Host-okg.sid" : "okg.sid";
@@ -51,14 +52,25 @@ app.use(session({
 }));
 
 const pages = new Set(["index.html","blog.html","help.html","announcements.html","staff.html","login.html","dashboard.html","owner-setup.html","okg-manager.html"]);
-app.get("/", (_req,res) => res.sendFile(path.join(__dirname,"index.html")));
+app.get("/", (_req,res) => { res.set("Cache-Control","no-store"); res.sendFile(path.join(__dirname,"index.html")); });
+app.get("/api/version", (_req,res) => res.set("Cache-Control","no-store").json({ name:"OneKidGaming Website", version:SITE_VERSION }));
+app.get("/okg-manager.html", (_req,res,next) => {
+  const page = path.join(__dirname,"okg-manager.html");
+  if (!fs.existsSync(page)) return res.status(503).type("text/plain").send("OKG Manager page is missing from this deployment. Expected website version " + SITE_VERSION + ".");
+  res.set("Cache-Control","no-store");
+  res.sendFile(page, err => { if (err) next(err); });
+});
 app.get("/invite", (_req, res) => {
   const installUrl = "https://discord.com/oauth2/authorize?client_id=1540731259544666132&permissions=1494917180630&integration_type=0&scope=bot%20applications.commands";
   res.redirect(302, installUrl);
 });
-app.get("/:page", (req,res,next) => pages.has(req.params.page) ? res.sendFile(path.join(__dirname,req.params.page)) : next());
-app.get("/styles.css", (_req,res) => res.sendFile(path.join(__dirname,"styles.css")));
-app.get("/script.js", (_req,res) => res.sendFile(path.join(__dirname,"script.js")));
+app.get("/:page", (req,res,next) => {
+  if (!pages.has(req.params.page)) return next();
+  res.set("Cache-Control","no-store");
+  res.sendFile(path.join(__dirname,req.params.page), err => { if (err) next(err); });
+});
+app.get("/styles.css", (_req,res) => { res.set("Cache-Control","no-store"); res.sendFile(path.join(__dirname,"styles.css")); });
+app.get("/script.js", (_req,res) => { res.set("Cache-Control","no-store"); res.sendFile(path.join(__dirname,"script.js")); });
 app.get("/portal.js", (_req,res) => res.sendFile(path.join(__dirname,"portal.js")));
 app.use("/assets", express.static(path.join(__dirname,"assets"), { dotfiles:"deny", index:false }));
 
