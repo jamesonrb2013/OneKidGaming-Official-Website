@@ -11,7 +11,8 @@ const bcrypt = require("bcryptjs");
 const rateLimit = require("express-rate-limit");
 
 const app = express();
-const SITE_VERSION = "1.2.3";
+const SITE_VERSION = "1.2.4";
+const PLATFORM_ADMIN_EMAIL = (process.env.PLATFORM_ADMIN_EMAIL || "jamesonrb2013@gmail.com").trim().toLowerCase();
 const port = Number(process.env.PORT || 8080);
 const production = process.env.NODE_ENV === "production";
 const cookieName = production ? "__Host-okg.sid" : "okg.sid";
@@ -164,20 +165,31 @@ app.post("/api/setup/owner",authLimit,wrap(async(req,res)=>{
   if(!token||token.length<32)return res.status(404).json({error:"Owner setup is disabled."});
   const provided=typeof req.body.setupToken==="string"?req.body.setupToken:"",a=Buffer.from(provided),b=Buffer.from(token);
   if(a.length!==b.length||!crypto.timingSafeEqual(a,b))return res.status(403).json({error:"Owner setup token is incorrect."});
-  const [owners]=await pool.execute("SELECT id FROM okg_users WHERE role='owner' LIMIT 1");
-  if(owners.length)return res.status(409).json({error:"Owner setup is permanently closed because an owner already exists."});
   const username=text(req.body.username,24),email=text(req.body.email,254).toLowerCase(),password=req.body.password;
-  if(!/^[A-Za-z0-9_-]{3,24}$/.test(username)||!emailOk(email)||!passwordOk(password))return res.status(400).json({error:"Enter a valid username, email, and password of at least 12 characters."});
-  const [existing]=await pool.execute("SELECT id FROM okg_users WHERE email=? OR username=? LIMIT 1",[email,username]);
-  if(existing.length)return res.status(409).json({error:"That email or username is already registered."});
+  if(email!==PLATFORM_ADMIN_EMAIL)return res.status(403).json({error:"Owner setup is restricted to the configured platform admin email."});
+  if(!/^[A-Za-z0-9_-]{3,24}$/.test(username)||!emailOk(email)||!passwordOk(password))return res.status(400).json({error:"Enter a valid username, the configured platform admin email, and a password of at least 12 characters."});
+  const [matches]=await pool.execute("SELECT id,username,email,role FROM okg_users WHERE email=? OR username=? LIMIT 2",[email,username]);
+  const emailUser=matches.find(user=>user.email===email);
+  const usernameUser=matches.find(user=>user.username===username);
+  if(usernameUser&&(!emailUser||usernameUser.id!==emailUser.id))return res.status(409).json({error:"That username is already registered to another email."});
   const hash=await bcrypt.hash(password,12);
-  const [created]=await pool.execute("INSERT INTO okg_users(username,email,password_hash,role) VALUES(?,?,?,'owner')",[username,email,hash]);
-  await audit(created.insertId,"owner.bootstrap_completed",created.insertId);
+  let userId;
+  let action;
+  if(emailUser){
+    await pool.execute("UPDATE okg_users SET username=?,password_hash=?,role='owner' WHERE id=?",[username,hash,emailUser.id]);
+    userId=emailUser.id;
+    action="owner.platform_admin_recovered";
+  }else{
+    const [created]=await pool.execute("INSERT INTO okg_users(username,email,password_hash,role) VALUES(?,?,?,'owner')",[username,email,hash]);
+    userId=created.insertId;
+    action="owner.platform_admin_created";
+  }
+  await audit(userId,action,userId,{email:PLATFORM_ADMIN_EMAIL});
   await new Promise((resolve,reject)=>req.session.regenerate(e=>e?reject(e):resolve()));
-  req.session.userId=created.insertId;
+  req.session.userId=userId;
   await new Promise((resolve,reject)=>req.session.save(e=>e?reject(e):resolve()));
-  const [rows]=await pool.execute("SELECT id,username,email,role,created_at FROM okg_users WHERE id=?",[created.insertId]);
-  res.status(201).json({user:safeUser(rows[0]),message:"Owner created. Remove OWNER_BOOTSTRAP_TOKEN from the service environment now."});
+  const [rows]=await pool.execute("SELECT id,username,email,role,created_at FROM okg_users WHERE id=?",[userId]);
+  res.status(201).json({user:safeUser(rows[0]),message:"Platform admin account is ready. Remove OWNER_BOOTSTRAP_TOKEN from the service environment now."});
 }));
 app.get("/api/announcements",wrap(async(_req,res)=>{
   const [rows]=await pool.execute("SELECT id,title,body,published_at FROM okg_announcements WHERE status='published' ORDER BY published_at DESC LIMIT 50");
