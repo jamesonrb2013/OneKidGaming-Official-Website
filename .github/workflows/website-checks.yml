@@ -33,10 +33,10 @@ jobs:
           grep -q '"okg-manager.html"' server.js
           grep -q 'app.get("/okg-manager.html"' server.js
           grep -q 'app.get("/api/version"' server.js
-          grep -q '"version": "1.2.3"' package.json
-          grep -q 'SITE_VERSION = "1.2.3"' script.js
+          grep -q '"version": "1.2.4"' package.json
+          grep -q 'SITE_VERSION = "1.2.4"' script.js
           grep -q 'discord.gg/2nHAng3gnr' okg-manager.html
-          grep -q 'Coolkid_5701' okg-manager.html
+          grep -q 'Coolkid_5701' okg-manager.html\n          grep -q '$("[data-auth-panel]").forEach' portal.js\n          grep -q 'jamesonrb2013@gmail.com' server.js\n          grep -q 'PLATFORM_ADMIN_EMAIL' server.js
       - name: Check website response (live smoke test)
         shell: bash
         run: |
