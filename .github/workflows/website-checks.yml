@@ -31,6 +31,10 @@ jobs:
         run: |
           test -f okg-manager.html
           grep -q '"okg-manager.html"' server.js
+          grep -q 'app.get("/okg-manager.html"' server.js
+          grep -q 'app.get("/api/version"' server.js
+          grep -q '"version": "1.2.3"' package.json
+          grep -q 'SITE_VERSION = "1.2.3"' script.js
           grep -q 'discord.gg/2nHAng3gnr' okg-manager.html
           grep -q 'Coolkid_5701' okg-manager.html
       - name: Check website response (live smoke test)
