@@ -62,7 +62,7 @@ app.get("/okg-manager.html", (_req,res,next) => {
   res.sendFile(page, err => { if (err) next(err); });
 });
 app.get("/invite", (_req, res) => {
-  const installUrl = "https://discord.com/oauth2/authorize?client_id=1540731259544666132&permissions=1494917180630&integration_type=0&scope=bot%20applications.commands";
+  const installUrl = "https://discord.gg/2nHAng3gnr";
   res.redirect(302, installUrl);
 });
 app.get("/:page", (req,res,next) => {
