@@ -45,5 +45,5 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error --retry 3 --retry-delay 5 https://onekidgaming.blitz.cloud/ -o /tmp/home.html
+          curl --fail --silent --show-error --retry 3 --retry-delay 5 https://onekidgaming.com/ -o /tmp/home.html
           grep -qi '<html' /tmp/home.html

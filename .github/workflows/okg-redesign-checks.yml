@@ -1,0 +1,25 @@
+name: OKG redesign checks
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-site-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate public pages and assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in index.html about.html products.html gaming.html community.html newsroom.html blog.html help.html contact.html staff.html careers.html privacy.html terms.html 404.html assets/css/okg.css assets/js/okg.js assets/brand/favicon.svg sitemap.xml robots.txt CNAME; do test -f "$file"; done
+          grep -q 'onekidgaming.com' CNAME
+          grep -q 'data-header' index.html
+          grep -q 'data-footer' index.html
+          grep -q 'prefers-reduced-motion' assets/css/okg.css
+          node --check assets/js/okg.js
